@@ -1,0 +1,23 @@
+workflows:
+  android:
+    name: Bluetooth 
+    instance_type: ubuntu-latest  # Ubuntu instance for building Kivy apps
+    scripts:
+      - name: Install Dependencies
+        script: |
+          sudo apt-get update
+          sudo apt-get install -y python3-pip python3-dev build-essential
+          sudo pip3 install buildozer
+          sudo apt-get install -y libgl1-mesa-glx libgles2-mesa
+          sudo apt-get install -y libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev
+          sudo apt-get install -y zlib1g-dev libjpeg-dev
+          sudo apt-get install -y libpng-dev
+          sudo apt-get install -y libfreetype6-dev
+          sudo apt-get install -y libssl-dev
+      - name: Build Android APK
+        script: |
+          buildozer android debug  # This builds your app in debug mode. Use 'release' for release build.
+    artifacts:
+      - bin/*.apk  # Path to the generated APK file
+    publishing:
+      email: jaiminpansal@gmail.com # Optional, for notifications
